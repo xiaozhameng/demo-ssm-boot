@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    # druid:
+    driver-class-name: com.mysql.jdbc.Driver
+    # 基本属性配置，这里加serverTimezone=GMT%2B8配置的原因为了防止因为时区导致数据库时间不准确
+    url: jdbc:mysql://com.xiaozhameng.aliyun:3306/xiaozhameng?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
+    username: test
+    # 数据库密码生产环境上要进行加密配置，可以启用德鲁伊数据库密码加密功能，这里因为是测试项目，密码直接暴露出来啦
+    password: 123456
+    #useGlobalDataSourceStat: true # 合并多个DruidDataSource的监控数据
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      # 配置初始化大小、最小、最大 (通常来说，只需要修改initialSize、minIdle、maxActive)
+      initial-size: 1
+      min-idle: 1
+      max-active: 20
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis:  60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      validation-query: select 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      # pool-prepared-statements: true
+      # max-pool-prepared-statement-per-connection-size: 20
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,slf4j
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录，这里设置超过8秒的就算慢sql了
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=8000
