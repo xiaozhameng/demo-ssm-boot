@@ -1,5 +1,5 @@
 /**
- * <p> Copyright (c) 2015-2025 微聚未来</p>
+ * <p> xiaozhameng</p>
  * <p>All Rights Reserved. 保留所有权利. </p>
  */
 
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 /**
- * @author Ge Hui
+ * @author xiaozhameng
  */
 @Service
 public class UserInfoService {

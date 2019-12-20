@@ -1,5 +1,5 @@
 /**
- * <p> Copyright (c) 2015-2025 微聚未来</p>
+ * <p> xiaozhameng</p>
  * <p>All Rights Reserved. 保留所有权利. </p>
  */
 
@@ -9,7 +9,7 @@ package com.xiaozhameng.ssm.boot.service.dao;
 import com.xiaozhameng.ssm.boot.service.dao.po.UserInfo;
 
 /**
- * @author Ge Hui
+ * @author xiaozhameng
  */
 public interface UserInfoDao {
 

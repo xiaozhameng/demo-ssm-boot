@@ -1,5 +1,5 @@
 /**    
- * <p> Copyright (c) 2015-2025 微聚未来</p>
+ * <p> xiaozhameng</p>
  * <p>All Rights Reserved. 保留所有权利. </p>
  */
 
@@ -8,7 +8,7 @@ package com.xiaozhameng.ssm.boot.service.dao.po;
 import lombok.Data;
 
 /**
- * @author Ge Hui
+ * @author xiaozhameng
  */
 @Data
 public class UserInfo {
