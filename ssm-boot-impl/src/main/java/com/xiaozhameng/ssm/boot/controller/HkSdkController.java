@@ -2,10 +2,13 @@ package com.xiaozhameng.ssm.boot.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sun.jna.NativeLong;
+import com.sun.jna.ptr.IntByReference;
 import hksdk.HCNetSDK;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 
 
@@ -69,7 +72,7 @@ public class HkSdkController {
     public String checkDevice() {
         HCNetSDK.NET_DVR_WORKSTATE_V30 m_strWorkState = new HCNetSDK.NET_DVR_WORKSTATE_V30();//调用接口获取设备工作状态
         boolean getDVRConfigSuc = hCNetSDK.NET_DVR_GetDVRWorkState_V30(lUserID, m_strWorkState);
-        return this.buildMessage("","");
+        return this.buildMessage("api/device/check",getDVRConfigSuc);
     }
 
     // ********************** 如下信息为测试组装信息 *********************
@@ -110,7 +113,6 @@ public class HkSdkController {
         System.out.println(str);
         return str;
     }
-
 
     /*************************************************
      函数:      "查找"  按钮单击相应函数
@@ -203,23 +205,24 @@ public class HkSdkController {
         struStopTime = new HCNetSDK.NET_DVR_TIME();
         struStartTime.dwYear = Integer.parseInt("2020");//开始时间
         struStartTime.dwMonth = Integer.parseInt("06");
-        struStartTime.dwDay = Integer.parseInt("20");
+        struStartTime.dwDay = Integer.parseInt("24");
         struStartTime.dwHour = Integer.parseInt("00");
         struStartTime.dwMinute = Integer.parseInt("00");
         struStartTime.dwSecond = Integer.parseInt("00");
         struStopTime.dwYear = Integer.parseInt("2020");//结束时间
         struStopTime.dwMonth = Integer.parseInt("06");
-        struStopTime.dwDay = Integer.parseInt("22");
-        struStopTime.dwHour = Integer.parseInt("00");
-        struStopTime.dwMinute = Integer.parseInt("00");
-        struStopTime.dwSecond = Integer.parseInt("00");
+        struStopTime.dwDay = Integer.parseInt("24");
+        struStopTime.dwHour = Integer.parseInt("12");
+        struStopTime.dwMinute = Integer.parseInt("59");
+        struStopTime.dwSecond = Integer.parseInt("59");
 
-        String sFileName = "c:/DownLoadMyTest/" + m_sDeviceIP + "/" + 1 +
-                struStartTime.toStringTitle() + struStopTime.toStringTitle() + System.currentTimeMillis() + ".mp4";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+
+        String sFileName = "c:\\DownLoad\\" + sdf.format(new Date()) + ".mp4";
         System.out.println(sFileName);
         m_lLoadHandle = hCNetSDK.NET_DVR_GetFileByTime(lUserID, new NativeLong(1), struStartTime, struStopTime, sFileName);
         if (m_lLoadHandle.intValue() >= 0) {
-            hCNetSDK.NET_DVR_PlayBackControl(m_lLoadHandle, HCNetSDK.NET_DVR_PLAYSTART, 0, null);
+            hCNetSDK.NET_DVR_PlayBackControl(m_lLoadHandle, HCNetSDK.NET_DVR_PLAYSTART, 0, new IntByReference(0));
             return sFileName;
         } else {
             System.out.println("按时间下载失败 laste error " + hCNetSDK.NET_DVR_GetLastError());
@@ -257,7 +260,6 @@ public class HkSdkController {
         }
         return check;
     }
-
 
     /**
      * 这里的配置信息到时候可以放在数据库，然后提供操作界面

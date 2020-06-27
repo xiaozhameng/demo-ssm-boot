@@ -1,5 +1,6 @@
 package com.xiaozhameng.ssm.boot.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -7,8 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author xiaozhameng
  */
-@RestController
-@RequestMapping("/hello")
+@Controller
 public class DemoController {
 
     /**
