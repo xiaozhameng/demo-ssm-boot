@@ -7,7 +7,7 @@ import javax.crypto.spec.DESKeySpec;
 import java.security.SecureRandom;
 
 /**
- * 从网上找的一个工具
+ * @author xiaozhameng
  */
 public class EncUtil {
     private final static String DES = "DES";
@@ -83,7 +83,6 @@ public class EncUtil {
         return builder.toString().toUpperCase();
     }
 
-
     private static byte[] hex2byte(byte[] b) {
         if ((b.length % 2) != 0){
             throw new IllegalArgumentException("长度不是偶数");
@@ -94,16 +93,5 @@ public class EncUtil {
             b2[n / 2] = (byte) Integer.parseInt(item, 16);
         }
         return b2;
-    }
-
-    public static void main(String[] args) {
-
-        String s = EncUtil.encrypt("ABCDE#KKSKWS");
-        System.out.println(s);
-        System.out.println(EncUtil.decrypt(s));
-
-        String s1 = EncUtil.encrypt("DEFBA#KKSKWS");
-        System.out.println(s1);
-        System.out.println(EncUtil.decrypt(s1));
     }
 }

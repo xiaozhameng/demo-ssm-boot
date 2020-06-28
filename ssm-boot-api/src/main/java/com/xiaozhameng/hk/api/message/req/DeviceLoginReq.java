@@ -22,5 +22,4 @@ public class DeviceLoginReq implements Serializable {
      * 设备Id  ，目前仅适用设备配置ID 就可以登录，后续如果需要安全校验可以扩展
      */
     private Long deviceId;
-
 }

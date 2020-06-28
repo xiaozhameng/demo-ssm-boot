@@ -110,8 +110,8 @@ public class HkSdkManageController {
     public Result<DeviceOptCommonRes<String>> deviceLogin(@Valid @RequestBody DeviceLoginReq param) {
         DeviceInfo deviceInfo = deviceInfoService.getByPrimaryKey(param.getDeviceId());
         Assert.notNull(deviceInfo,String.format("根据设备ID = %s 未找到设备配置信息，请检查！", param.getDeviceId()));
-
         // 调用设备登录接口
+
 
         // 将登录的信息存储在扩展表中
 
