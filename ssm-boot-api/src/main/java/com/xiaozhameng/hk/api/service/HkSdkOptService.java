@@ -3,9 +3,14 @@ package com.xiaozhameng.hk.api.service;
 import com.xiaozhameng.hk.api.common.Result;
 import com.xiaozhameng.hk.api.message.req.DeviceRecordOptReq;
 import com.xiaozhameng.hk.api.message.res.DeviceOptCommonRes;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
 
 /**
  * 海康SDK 服务二次封装接口
+ *
+ * @author xiaozhameng
+ * @date 2020/06/26
  * <p>
  * 设备操作相关接口
  */
@@ -13,28 +18,48 @@ public interface HkSdkOptService {
 
     /**
      * 开始录像：返回是否录操作成功
+     *
+     * @param token 请求参数
+     * @return vo
      */
-    Result<DeviceOptCommonRes<Boolean>> videoStart(String token);
+    @POST("/compensatory/overdue/calculate")
+    Result<DeviceOptCommonRes<Boolean>> videoStart(@Body String token);
 
     /**
      * 结束录像：返回是否录操作成功
+     *
+     * @param token 请求参数
+     * @return vo
      */
-    Result<DeviceOptCommonRes<Boolean>> videoStop(String token);
+    @POST("/compensatory/overdue/calculate")
+    Result<DeviceOptCommonRes<Boolean>> videoStop(@Body String token);
 
     /**
      * 抓图：返回是否操作成功
+     *
+     * @param token 请求参数
+     * @return vo
      */
-    Result<DeviceOptCommonRes<String>> videoCapture(String token);
+    @POST("/compensatory/overdue/calculate")
+    Result<DeviceOptCommonRes<String>> videoCapture(@Body String token);
 
     /**
      * 文件上传：返回是否操作成功
+     *
+     * @param param 请求参数
+     * @return vo
      */
-    Result<DeviceOptCommonRes<Boolean>> dataUpload(DeviceRecordOptReq param);
+    @POST("/compensatory/overdue/calculate")
+    Result<DeviceOptCommonRes<Boolean>> dataUpload(@Body DeviceRecordOptReq param);
 
     /**
      * 文件上传进度查询：返回是否操作成功
+     *
+     * @param param 请求参数
+     * @return vo
      * <p>
      * 扩展字段返回上传进度
      */
-    Result<DeviceOptCommonRes<Long>> dataUploadCheck(DeviceRecordOptReq param);
+    @POST("/compensatory/overdue/calculate")
+    Result<DeviceOptCommonRes<Long>> dataUploadCheck(@Body DeviceRecordOptReq param);
 }

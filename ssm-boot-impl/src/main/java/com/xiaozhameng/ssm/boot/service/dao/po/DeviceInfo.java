@@ -1,19 +1,21 @@
-package com.xiaozhameng.hk.api.message.vo;
+package com.xiaozhameng.ssm.boot.service.dao.po;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 /**
- * 设备相关信息
  * @author xiaozhameng
  */
-@Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-public class DeviceConfigInfoVo {
+@Builder
+public class DeviceInfo {
+
     /** id */
     private Long id;
 
@@ -24,10 +26,10 @@ public class DeviceConfigInfoVo {
     private Integer port;
 
     /** 设备登录用户名 */
-    private String duserName;
+    private String dUserName;
 
     /** 设备登录密码 */
-    private String dpassword;
+    private String dPassword;
 
     /** 设备安装工位号 */
     private String stationNo;
@@ -43,4 +45,5 @@ public class DeviceConfigInfoVo {
 
     /** 更新时间戳 */
     private Date updateTime;
+
 }

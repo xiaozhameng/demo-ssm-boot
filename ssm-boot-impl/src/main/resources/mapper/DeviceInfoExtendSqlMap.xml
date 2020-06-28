@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xiaozhameng.ssm.boot.service.dao.DeviceInfoExtendDao">
+
+    <resultMap id="BaseResultMap" type="com.xiaozhameng.ssm.boot.service.dao.po.DeviceInfoExtend">
+        <result property="id" column="ID"/>
+        <result property="deviceId" column="DEVICE_ID"/>
+        <result property="key" column="KEY"/>
+        <result property="value" column="VALUE"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID ,DEVICE_ID ,KEY ,VALUE ,CREATE_TIME ,UPDATE_TIME 
+    </sql>
+
+    <insert id="saveSelective"  useGeneratedKeys="true" keyProperty="id"  parameterType="com.xiaozhameng.ssm.boot.service.dao.po.DeviceInfoExtend">
+        INSERT INTO device_info_extend
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null!=id">
+                ID  ,
+            </if>
+            <if test="null!=deviceId">
+                DEVICE_ID  ,
+            </if>
+            <if test="null!=key">
+                KEY  ,
+            </if>
+            <if test="null!=value">
+                VALUE  ,
+            </if>
+            <if test="null!=createTime">
+                CREATE_TIME  ,
+            </if>
+            <if test="null!=updateTime">
+                UPDATE_TIME  
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="null!=id">
+                #{id, jdbcType=BIGINT} ,
+            </if>
+            <if test="null!=deviceId">
+                #{deviceId, jdbcType=BIGINT} ,
+            </if>
+            <if test="null!=key">
+                #{key, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=value">
+                #{value, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=createTime">
+                #{createTime, jdbcType=TIMESTAMP} ,
+            </if>
+            <if test="null!=updateTime">
+                #{updateTime, jdbcType=TIMESTAMP} 
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xiaozhameng.ssm.boot.service.dao.po.DeviceInfoExtend">
+        UPDATE device_info_extend
+        <set>
+		   <if test="null!=deviceId">
+			  DEVICE_ID = #{deviceId, jdbcType=BIGINT} ,
+		   </if>
+			<if test="null!=key and ''!=key ">
+				KEY = #{key, jdbcType=VARCHAR} ,
+			</if>
+			<if test="null!=value and ''!=value ">
+				VALUE = #{value, jdbcType=VARCHAR} ,
+			</if>
+		   <if test="null!=createTime">
+			  CREATE_TIME = #{createTime, jdbcType=TIMESTAMP} ,
+		   </if>
+		   <if test="null!=updateTime">
+			  UPDATE_TIME = #{updateTime, jdbcType=TIMESTAMP} 
+		   </if>
+        </set>
+        WHERE
+            ID = #{id} 
+    </update>
+
+    <select id="getByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM device_info_extend
+        WHERE
+            ID = #{id} 
+    </select>
+    
+</mapper>
