@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class Token {
     private String prefix;
     private String suffix;
-    private String loginId;
+    private long loginId;
     private long deviceId;
     private String temp;
 }

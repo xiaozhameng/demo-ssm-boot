@@ -22,7 +22,7 @@ public class TokenUtil {
      * @param loginId 设备登录ID
      * @return token
      */
-    public static String generateToken(String loginId, long deviceId) {
+    public static String generateToken(long loginId, long deviceId) {
         Token token = Token.builder()
                 .prefix(PREFIX)
                 .suffix(SUFFIX)
