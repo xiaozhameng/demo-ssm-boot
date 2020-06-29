@@ -126,9 +126,11 @@ public class HkSdkOptController {
         if (!DeviceOptTypeEnum.RECORD_DOWNLOAD.name().equals(record.getOptType())){
             return Result.of(DeviceOptCommonRes.getFailedInstance("未找到对应的下载记录"));
         }
-
-        int progressRate = hkSdkAdapter.fileDownloadCheck(downloadRes.getDownLoadHandle());
-        return null;
+        // 下载记录存储的值是下载文件的句柄
+        String optData = record.getOptData();
+        Long fileHandle = Long.valueOf(optData);
+        int progressRate = hkSdkAdapter.fileDownloadCheck(fileHandle);
+        return Result.of(DeviceOptCommonRes.getSuccessInstance((long)progressRate));
     }
 
     /**
