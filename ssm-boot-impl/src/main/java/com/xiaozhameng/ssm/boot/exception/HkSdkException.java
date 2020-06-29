@@ -8,5 +8,4 @@ package com.xiaozhameng.ssm.boot.exception;
  */
 public class HkSdkException extends BusinessException {
     private static final long serialVersionUID = -182250433792295891L;
-
 }

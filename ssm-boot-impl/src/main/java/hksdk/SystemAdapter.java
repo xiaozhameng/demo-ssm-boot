@@ -15,5 +15,4 @@ public class SystemAdapter {
         String PATH = "C:\\workspace\\CH-HCNetSDKV6.1.4.42_build20200527_win64\\库文件\\";
         return PATH;
     }
-
 }

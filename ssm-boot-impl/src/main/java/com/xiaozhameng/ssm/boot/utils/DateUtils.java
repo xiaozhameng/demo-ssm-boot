@@ -13,8 +13,7 @@ import java.util.Date;
 public class DateUtils {
 
     /**
-     * @param date
-     * @return
+     * Date 转 LocalDateTime
      */
     public static LocalDateTime dateConvertToLocalDateTime(Date date) {
         return date.toInstant().atOffset(ZoneOffset.of("+8")).toLocalDateTime();
@@ -23,9 +22,6 @@ public class DateUtils {
 
     /**
      * LocalDateTime 转Date
-     *
-     * @param localDateTime
-     * @return
      */
     public static Date localDateTimeConvertToDate(LocalDateTime localDateTime) {
         return Date.from(localDateTime.toInstant(ZoneOffset.of("+8")));
