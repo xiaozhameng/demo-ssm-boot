@@ -102,11 +102,20 @@
             <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
 
+        <!--        jna 框架引入，调用海康SDK-->
         <dependency>
             <groupId>com.sun.jna</groupId>
             <artifactId>jna</artifactId>
             <version>3.0.9</version>
         </dependency>
+
+        <!--        sftp-->
+        <dependency>
+            <groupId>org.springframework.integration</groupId>
+            <artifactId>spring-integration-sftp</artifactId>
+            <version>5.1.7.RELEASE</version>
+        </dependency>
+
 
         <!-- 测试包 -->
         <dependency>

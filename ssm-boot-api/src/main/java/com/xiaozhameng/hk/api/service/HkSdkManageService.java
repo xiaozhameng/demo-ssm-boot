@@ -73,5 +73,5 @@ public interface HkSdkManageService {
      * @return vo
      */
     @POST("/api/device/manage/v1/state")
-    Result<DeviceOptCommonRes<String>> deviceState(@Body String token);
+    Result<DeviceOptCommonRes<Boolean>> deviceState(@Body String token);
 }

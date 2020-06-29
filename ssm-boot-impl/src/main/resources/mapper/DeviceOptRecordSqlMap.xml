@@ -96,7 +96,7 @@
 				JOB_NO = #{jobNo, jdbcType=VARCHAR} ,
 			</if>
 			<if test="null!=deviceId and ''!=deviceId ">
-				DEVICE_ID = #{deviceId, jdbcType=VARCHAR} ,
+				DEVICE_ID = #{deviceId, jdbcType=BIGINT} ,
 			</if>
 			<if test="null!=optType and ''!=optType ">
 				OPT_TYPE = #{optType, jdbcType=VARCHAR} ,

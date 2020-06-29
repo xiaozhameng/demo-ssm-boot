@@ -1,3 +1,12 @@
+# 海康SDK 包的一些基本配置，包括SDK包在服务器的位置，以及临时缓存文件
+sdk-config:
+  #  SDK 包的位置
+  sdk-path: /home
+  #  文件存储临时路径
+  temp-path: /home
+sftp-config:
+  sfp
+
 spring:
   datasource:
     # druid:

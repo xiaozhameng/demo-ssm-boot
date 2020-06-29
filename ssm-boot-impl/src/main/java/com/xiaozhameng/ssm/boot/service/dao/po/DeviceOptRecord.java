@@ -32,13 +32,16 @@ public class DeviceOptRecord {
     private String jobNo;
 
     /** 设备ID */
-    private String deviceId;
+    private long deviceId;
 
     /** 操作类型 */
     private String optType;
 
     /** 操作状态 */
     private String state;
+
+    /** 缓存数据 */
+    private String optData;
 
     /** 创建时间戳 */
     private Date createTime;

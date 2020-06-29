@@ -6,9 +6,18 @@ import com.xiaozhameng.hk.api.message.req.DeviceConfigQueryReq;
 import com.xiaozhameng.hk.api.message.req.DeviceLoginReq;
 import com.xiaozhameng.hk.api.message.res.DeviceOptCommonRes;
 import com.xiaozhameng.hk.api.message.vo.DeviceConfigInfoVo;
+import com.xiaozhameng.ssm.boot.biz.HkSdkAdapter;
+import com.xiaozhameng.ssm.boot.message.enums.CommonStatus;
+import com.xiaozhameng.ssm.boot.message.enums.DeviceInfoExtendEnum;
+import com.xiaozhameng.ssm.boot.message.enums.DeviceOptTypeEnum;
+import com.xiaozhameng.ssm.boot.message.result.sdk.StateRes;
 import com.xiaozhameng.ssm.boot.service.DeviceInfoExtendService;
 import com.xiaozhameng.ssm.boot.service.DeviceInfoService;
+import com.xiaozhameng.ssm.boot.service.DeviceOptRecordService;
 import com.xiaozhameng.ssm.boot.service.dao.po.DeviceInfo;
+import com.xiaozhameng.ssm.boot.service.dao.po.DeviceInfoExtend;
+import com.xiaozhameng.ssm.boot.service.dao.po.DeviceOptRecord;
+import com.xiaozhameng.ssm.boot.utils.TokenUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -36,9 +45,13 @@ public class HkSdkManageController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Resource
-    private DeviceInfoExtendService deviceInfoExtendService ;
+    private DeviceInfoExtendService deviceInfoExtendService;
     @Resource
     private DeviceInfoService deviceInfoService;
+    @Resource
+    private HkSdkAdapter hkSdkAdapter;
+    @Resource
+    private DeviceOptRecordService deviceOptRecordService;
 
     /**
      * 设备配置-新增
@@ -49,7 +62,7 @@ public class HkSdkManageController {
     @RequestMapping("add")
     public Result<DeviceOptCommonRes<Boolean>> deviceInfoAdd(@Valid @RequestBody DeviceConfigInfoVo param) {
         DeviceInfo deviceInfo = DeviceInfo.builder().build();
-        BeanUtils.copyProperties(param,deviceInfo);
+        BeanUtils.copyProperties(param, deviceInfo);
         int saveResult = deviceInfoService.saveSelective(deviceInfo);
         return Result.of(DeviceOptCommonRes.getSuccessInstance(saveResult == 1));
     }
@@ -63,7 +76,7 @@ public class HkSdkManageController {
     @RequestMapping("update")
     public Result<DeviceOptCommonRes<Boolean>> deviceInfoUpdate(@Valid @RequestBody DeviceConfigInfoVo param) {
         DeviceInfo deviceInfo = DeviceInfo.builder().build();
-        BeanUtils.copyProperties(param,deviceInfo);
+        BeanUtils.copyProperties(param, deviceInfo);
         int saveResult = deviceInfoService.updateByPrimaryKeySelective(deviceInfo);
         return Result.of(DeviceOptCommonRes.getSuccessInstance(saveResult == 1));
     }
@@ -109,16 +122,33 @@ public class HkSdkManageController {
     @RequestMapping("login")
     public Result<DeviceOptCommonRes<String>> deviceLogin(@Valid @RequestBody DeviceLoginReq param) {
         DeviceInfo deviceInfo = deviceInfoService.getByPrimaryKey(param.getDeviceId());
-        Assert.notNull(deviceInfo,String.format("根据设备ID = %s 未找到设备配置信息，请检查！", param.getDeviceId()));
+        Assert.notNull(deviceInfo, String.format("根据设备ID = %s 未找到设备配置信息，请检查！", param.getDeviceId()));
         // 调用设备登录接口
-
+        long loginId = hkSdkAdapter.deviceLogin(deviceInfo);
+        // 生成token
+        String tokenStr = TokenUtil.generateToken(loginId, deviceInfo.getId());
 
         // 将登录的信息存储在扩展表中
+        DeviceInfoExtend extend = DeviceInfoExtend.builder()
+                .deviceId(deviceInfo.getId())
+                .key(DeviceInfoExtendEnum.TOKEN.name())
+                .value(tokenStr)
+                .build();
+        deviceInfoExtendService.saveSelective(extend);
 
         // 记录设备登录日志
+        DeviceOptRecord optRecord = DeviceOptRecord.builder()
+                .deviceId(deviceInfo.getId())
+                .jobNo(deviceInfo.getJobNo())
+                .optType(DeviceOptTypeEnum.LOGIN.name())
+                .userId(param.getUserId())
+                .userName(param.getUserName())
+                .state(CommonStatus.SUCCESS.name())
+                .build();
+        deviceOptRecordService.saveSelective(optRecord);
 
         // 封装结果返回
-        return null;
+        return Result.of(DeviceOptCommonRes.getSuccessInstance(tokenStr));
     }
 
     /**
@@ -128,8 +158,14 @@ public class HkSdkManageController {
      * @return vo
      */
     @RequestMapping("state")
-    public Result<DeviceOptCommonRes<String>> deviceState(@NotNull String token) {
-        return null;
+    public Result<DeviceOptCommonRes<Boolean>> deviceState(@NotNull String token) {
+        StateRes stateRes = hkSdkAdapter.deviceState(token);
+        DeviceOptCommonRes.builder()
+                .code(stateRes.getCode())
+                .message(stateRes.getCodeDes())
+                .extend(stateRes.isResult())
+                .build();
+        return Result.of();
     }
 
 }

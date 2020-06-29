@@ -59,4 +59,17 @@ public class DeviceOptCommonRes<T> implements Serializable {
         res.setMessage(CommonResCode.FAILED.getMessage());
         return res;
     }
+
+    /**
+     * 返回一个默认成功的结果集
+     *
+     * @param <R> 类型
+     * @return
+     */
+    public static <R> DeviceOptCommonRes<R> getFailedInstance(String message) {
+        DeviceOptCommonRes<R> res = new DeviceOptCommonRes<R>();
+        res.setCode(CommonResCode.FAILED.getCode());
+        res.setMessage(message);
+        return res;
+    }
 }
