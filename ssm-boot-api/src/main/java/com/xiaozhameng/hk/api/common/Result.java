@@ -1,12 +1,20 @@
 package com.xiaozhameng.hk.api.common;
 
 import com.xiaozhameng.hk.api.enums.CommonResCode;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
 
 /**
  * 封装公共的响应接口
+ * @author xiaozhameng
  */
-public final class Result<T> {
+@Getter
+@Setter
+public class Result<T> implements Serializable {
 
+    private static final long serialVersionUID = 5082995475412807124L;
     private String code;
     private String message;
 

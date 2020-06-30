@@ -17,5 +17,6 @@ public class Token {
     private String suffix;
     private long loginId;
     private long deviceId;
+    private String jobNo;
     private String temp;
 }

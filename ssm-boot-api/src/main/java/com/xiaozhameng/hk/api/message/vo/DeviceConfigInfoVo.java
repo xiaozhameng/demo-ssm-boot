@@ -2,6 +2,7 @@ package com.xiaozhameng.hk.api.message.vo;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -13,7 +14,8 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-public class DeviceConfigInfoVo {
+public class DeviceConfigInfoVo implements Serializable {
+    private static final long serialVersionUID = -8381533202364611257L;
     /** id */
     private Long id;
 
@@ -24,10 +26,10 @@ public class DeviceConfigInfoVo {
     private Integer port;
 
     /** 设备登录用户名 */
-    private String duserName;
+    private String loginName;
 
     /** 设备登录密码 */
-    private String dpassword;
+    private String loginPwd;
 
     /** 设备安装工位号 */
     private String stationNo;
@@ -36,7 +38,7 @@ public class DeviceConfigInfoVo {
     private String jobNo;
 
     /** 删除状态 */
-    private String delFlag;
+    private boolean delFlag;
 
     /** 创建时间戳 */
     private Date createTime;

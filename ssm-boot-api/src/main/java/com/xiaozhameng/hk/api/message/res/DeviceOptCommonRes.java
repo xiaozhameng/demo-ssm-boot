@@ -17,6 +17,7 @@ import java.io.Serializable;
 @Setter
 public class DeviceOptCommonRes<T> implements Serializable {
 
+    private static final long serialVersionUID = 8706840486717190357L;
     /**
      * 响应码
      */

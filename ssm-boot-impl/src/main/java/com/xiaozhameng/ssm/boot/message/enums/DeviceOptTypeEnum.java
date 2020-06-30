@@ -20,6 +20,10 @@ public enum DeviceOptTypeEnum {
      */
     MANUAL_RECORD,
     /**
+     * 手动录像
+     */
+    MANUAL_RECORD_STOP,
+    /**
      * 手动抓图
      */
     MANUAL_CAPTURE;

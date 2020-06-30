@@ -39,7 +39,7 @@ public class HkSdkAdapter {
     /**
      * SDK接口
      */
-    static HCNetSDK hCNetSDK = HCNetSDK.INSTANCE;
+    static HCNetSDK hCNetSDK = null ;// HCNetSDK.INSTANCE;
 
     @Value("${sdk-config.temp-path}")
     private String tempPath;
@@ -64,8 +64,8 @@ public class HkSdkAdapter {
         //设备ip地址
         String deviceInfoIp = deviceInfo.getIp();
         short iPort = (short) deviceInfo.getPort().intValue();
-        String userName = deviceInfo.getDUserName();
-        String passWord = deviceInfo.getDPassword();
+        String userName = deviceInfo.getLoginName();
+        String passWord = deviceInfo.getLoginPwd();
 
         // 设备信息
         HCNetSDK.NET_DVR_DEVICEINFO_V30 deviceInfoV30 = new HCNetSDK.NET_DVR_DEVICEINFO_V30();
@@ -127,11 +127,10 @@ public class HkSdkAdapter {
     /**
      * 开始录像
      *
-     * @param tokenStr
+     * @param token token
      * @return result 开始录像
      */
-    public boolean videoStart(String tokenStr) {
-        Token token = TokenUtil.tokenParse(tokenStr);
+    public boolean videoStart(Token token) {
         long loginId = token.getLoginId();
         // 设备登录ID
         NativeLong lUserID = new NativeLong(loginId);
@@ -144,11 +143,10 @@ public class HkSdkAdapter {
     /**
      * 结束录像
      *
-     * @param tokenStr tokenStr
+     * @param token token
      * @return result 录像结果
      */
-    public boolean videoStop(String tokenStr) {
-        Token token = TokenUtil.tokenParse(tokenStr);
+    public boolean videoStop(Token token) {
         long loginId = token.getLoginId();
         // 设备登录ID
         NativeLong lUserID = new NativeLong(loginId);
@@ -161,11 +159,10 @@ public class HkSdkAdapter {
     /**
      * 抓图
      *
-     * @param tokenStr token 信息
+     * @param token token 信息
      * @return result
      */
-    public CaptureRes videoCapture(String tokenStr) {
-        Token token = TokenUtil.tokenParse(tokenStr);
+    public CaptureRes videoCapture(Token token) {
         long loginId = token.getLoginId();
         // 设备登录ID
         NativeLong lUserId = new NativeLong(loginId);
@@ -197,7 +194,7 @@ public class HkSdkAdapter {
      *
      * @return result
      */
-    public DownloadRes fileDownload(DeviceOptRecord optRecord, String tokenStr) {
+    public DownloadRes fileDownload(DeviceOptRecord optRecord, Token token) {
         // 如果这不是一条录像对应的记录，则直接返回失败
         if (optRecord == null || !DeviceOptTypeEnum.MANUAL_RECORD.name().equals(optRecord.getOptType())) {
             throw new RuntimeException("未找到对应的操作记录");
@@ -229,8 +226,6 @@ public class HkSdkAdapter {
                 + optRecord.getDeviceId() + File.separator
                 + "video" + File.separator
                 + subPath + ".mp4";
-
-        Token token = TokenUtil.tokenParse(tokenStr);
         NativeLong lUserId = new NativeLong(token.getLoginId());
         NativeLong downLoadHandle = hCNetSDK.NET_DVR_GetFileByTime(lUserId, DEFAULT_CHANNEL, startTime, stopTime, sFileName);
 

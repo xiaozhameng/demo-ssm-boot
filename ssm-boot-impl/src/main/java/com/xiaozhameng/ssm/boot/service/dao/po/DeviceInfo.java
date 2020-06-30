@@ -26,10 +26,10 @@ public class DeviceInfo {
     private Integer port;
 
     /** 设备登录用户名 */
-    private String dUserName;
+    private String loginName;
 
     /** 设备登录密码 */
-    private String dPassword;
+    private String loginPwd;
 
     /** 设备安装工位号 */
     private String stationNo;
@@ -38,7 +38,7 @@ public class DeviceInfo {
     private String jobNo;
 
     /** 删除状态 */
-    private String delFlag;
+    private boolean delFlag;
 
     /** 创建时间戳 */
     private Date createTime;

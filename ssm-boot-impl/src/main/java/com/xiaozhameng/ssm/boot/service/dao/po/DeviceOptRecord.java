@@ -23,10 +23,10 @@ public class DeviceOptRecord {
     private Long id;
 
     /** 操作用户用户ID */
-    private Long userId;
+    private Long optUserId;
 
     /** 用户姓名 */
-    private String userName;
+    private String optUserName;
 
     /** 工号 */
     private String jobNo;

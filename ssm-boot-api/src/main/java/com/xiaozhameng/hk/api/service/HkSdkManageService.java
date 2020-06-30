@@ -4,6 +4,7 @@ import com.xiaozhameng.hk.api.common.Result;
 import com.xiaozhameng.hk.api.message.req.DeviceConfigQueryBatchReq;
 import com.xiaozhameng.hk.api.message.req.DeviceConfigQueryReq;
 import com.xiaozhameng.hk.api.message.req.DeviceLoginReq;
+import com.xiaozhameng.hk.api.message.req.DeviceOptReq;
 import com.xiaozhameng.hk.api.message.res.DeviceOptCommonRes;
 import com.xiaozhameng.hk.api.message.vo.DeviceConfigInfoVo;
 import retrofit2.http.Body;
@@ -69,9 +70,9 @@ public interface HkSdkManageService {
     /**
      * 设备状态查询，将状态描述信息放在扩展位
      *
-     * @param token 请求参数
+     * @param param 请求参数
      * @return vo
      */
     @POST("/api/device/manage/v1/state")
-    Result<DeviceOptCommonRes<Boolean>> deviceState(@Body String token);
+    Result<DeviceOptCommonRes<Boolean>> deviceState(@Body DeviceOptReq param);
 }

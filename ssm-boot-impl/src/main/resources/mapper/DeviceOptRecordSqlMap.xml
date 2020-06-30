@@ -7,8 +7,8 @@
 
     <resultMap id="BaseResultMap" type="com.xiaozhameng.ssm.boot.service.dao.po.DeviceOptRecord">
         <result property="id" column="ID"/>
-        <result property="userId" column="USER_ID"/>
-        <result property="userName" column="USER_NAME"/>
+        <result property="optUserId" column="OPT_USER_ID"/>
+        <result property="optUserName" column="OPT_USER_NAME"/>
         <result property="jobNo" column="JOB_NO"/>
         <result property="deviceId" column="DEVICE_ID"/>
         <result property="optType" column="OPT_TYPE"/>
@@ -18,7 +18,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        ID ,USER_ID ,USER_NAME ,JOB_NO ,DEVICE_ID ,OPT_TYPE ,STATE ,CREATE_TIME ,UPDATE_TIME 
+        ID ,OPT_USER_ID ,OPT_USER_NAME ,JOB_NO ,DEVICE_ID ,OPT_TYPE ,STATE ,CREATE_TIME ,UPDATE_TIME 
     </sql>
 
     <insert id="saveSelective"  useGeneratedKeys="true" keyProperty="id"  parameterType="com.xiaozhameng.ssm.boot.service.dao.po.DeviceOptRecord">
@@ -27,11 +27,11 @@
             <if test="null!=id">
                 ID  ,
             </if>
-            <if test="null!=userId">
-                USER_ID  ,
+            <if test="null!=optUserId">
+                OPT_USER_ID  ,
             </if>
-            <if test="null!=userName">
-                USER_NAME  ,
+            <if test="null!=optUserName">
+                OPT_USER_NAME  ,
             </if>
             <if test="null!=jobNo">
                 JOB_NO  ,
@@ -49,24 +49,24 @@
                 CREATE_TIME  ,
             </if>
             <if test="null!=updateTime">
-                UPDATE_TIME  
+                UPDATE_TIME
             </if>
         </trim>
         <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
             <if test="null!=id">
                 #{id, jdbcType=BIGINT} ,
             </if>
-            <if test="null!=userId">
-                #{userId, jdbcType=BIGINT} ,
+            <if test="null!=optUserId">
+                #{optUserId, jdbcType=BIGINT} ,
             </if>
-            <if test="null!=userName">
-                #{userName, jdbcType=VARCHAR} ,
+            <if test="null!=optUserName">
+                #{optUserName, jdbcType=VARCHAR} ,
             </if>
             <if test="null!=jobNo">
                 #{jobNo, jdbcType=VARCHAR} ,
             </if>
             <if test="null!=deviceId">
-                #{deviceId, jdbcType=VARCHAR} ,
+                #{deviceId, jdbcType=BIGINT} ,
             </if>
             <if test="null!=optType">
                 #{optType, jdbcType=VARCHAR} ,
@@ -78,7 +78,7 @@
                 #{createTime, jdbcType=TIMESTAMP} ,
             </if>
             <if test="null!=updateTime">
-                #{updateTime, jdbcType=TIMESTAMP} 
+                #{updateTime, jdbcType=TIMESTAMP}
             </if>
         </trim>
     </insert>
@@ -86,41 +86,41 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.xiaozhameng.ssm.boot.service.dao.po.DeviceOptRecord">
         UPDATE device_opt_record
         <set>
-		   <if test="null!=userId">
-			  USER_ID = #{userId, jdbcType=BIGINT} ,
-		   </if>
-			<if test="null!=userName and ''!=userName ">
-				USER_NAME = #{userName, jdbcType=VARCHAR} ,
-			</if>
-			<if test="null!=jobNo and ''!=jobNo ">
-				JOB_NO = #{jobNo, jdbcType=VARCHAR} ,
-			</if>
-			<if test="null!=deviceId and ''!=deviceId ">
-				DEVICE_ID = #{deviceId, jdbcType=BIGINT} ,
-			</if>
-			<if test="null!=optType and ''!=optType ">
-				OPT_TYPE = #{optType, jdbcType=VARCHAR} ,
-			</if>
-			<if test="null!=state and ''!=state ">
-				STATE = #{state, jdbcType=VARCHAR} ,
-			</if>
-		   <if test="null!=createTime">
-			  CREATE_TIME = #{createTime, jdbcType=TIMESTAMP} ,
-		   </if>
-		   <if test="null!=updateTime">
-			  UPDATE_TIME = #{updateTime, jdbcType=TIMESTAMP} 
-		   </if>
+            <if test="null!=optUserId">
+                OPT_USER_ID = #{optUserId, jdbcType=BIGINT} ,
+            </if>
+            <if test="null!=optUserName and ''!=optUserName ">
+                OPT_USER_NAME = #{optUserName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=jobNo and ''!=jobNo ">
+                JOB_NO = #{jobNo, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=deviceId">
+                DEVICE_ID = #{deviceId, jdbcType=BIGINT} ,
+            </if>
+            <if test="null!=optType and ''!=optType ">
+                OPT_TYPE = #{optType, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=state and ''!=state ">
+                STATE = #{state, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=createTime">
+                CREATE_TIME = #{createTime, jdbcType=TIMESTAMP} ,
+            </if>
+            <if test="null!=updateTime">
+                UPDATE_TIME = #{updateTime, jdbcType=TIMESTAMP}
+            </if>
         </set>
         WHERE
-            ID = #{id} 
+        ID = #{id}
     </update>
 
     <select id="getByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT
-            <include refid="Base_Column_List" />
+        <include refid="Base_Column_List" />
         FROM device_opt_record
         WHERE
-            ID = #{id} 
+        ID = #{id}
     </select>
-    
+
 </mapper>

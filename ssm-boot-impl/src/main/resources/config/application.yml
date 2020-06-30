@@ -4,19 +4,31 @@ sdk-config:
   sdk-path: /home
   #  文件存储临时路径
   temp-path: /home
+# sftp 配置p
 sftp-config:
   sftpHost: xiaozhameng.sftp.aliyun
   port: 20
   sftpUser: temp
   password: 123456
   rootPath: /temp
-
 spring:
+#  模板引擎开启热部署
+  thymeleaf:
+    cache: false
+#  使用内存数据库做测试
+#  h2:
+#    console:
+#      enabled: true
   datasource:
+#    url: jdbc:h2:mem:test
+#    driver-class-name: org.h2.Driver
+#    username: root
+#    password: 123456
+#    schema: classpath:schema.sql
     # druid:
     driver-class-name: com.mysql.jdbc.Driver
     # 基本属性配置，这里加serverTimezone=GMT%2B8配置的原因为了防止因为时区导致数据库时间不准确
-    url: jdbc:mysql://com.xiaozhameng.aliyun:3306/xiaozhameng?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
+    url: jdbc:mysql://com.xiaozhameng.aliyun:3306/hkws?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
     username: test
     # 数据库密码生产环境上要进行加密配置，可以启用德鲁伊数据库密码加密功能，这里因为是测试项目，密码直接暴露出来啦
     password: 123456

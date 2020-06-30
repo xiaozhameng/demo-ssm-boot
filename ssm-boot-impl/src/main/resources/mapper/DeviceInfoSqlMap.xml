@@ -9,8 +9,8 @@
         <result property="id" column="ID"/>
         <result property="ip" column="IP"/>
         <result property="port" column="PORT"/>
-        <result property="dUserName" column="D_USER_NAME"/>
-        <result property="dPassword" column="D_PASSWORD"/>
+        <result property="loginName" column="LOGIN_NAME"/>
+        <result property="loginPwd" column="LOGIN_PWD"/>
         <result property="stationNo" column="STATION_NO"/>
         <result property="jobNo" column="JOB_NO"/>
         <result property="delFlag" column="DEL_FLAG"/>
@@ -19,7 +19,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        ID ,IP ,PORT ,D_USER_NAME ,D_PASSWORD ,STATION_NO ,JOB_NO ,DEL_FLAG ,CREATE_TIME ,UPDATE_TIME 
+        ID ,IP ,PORT ,LOGIN_NAME ,LOGIN_PWD ,STATION_NO ,JOB_NO ,DEL_FLAG ,CREATE_TIME ,UPDATE_TIME 
     </sql>
 
     <insert id="saveSelective"  useGeneratedKeys="true" keyProperty="id"  parameterType="com.xiaozhameng.ssm.boot.service.dao.po.DeviceInfo">
@@ -34,11 +34,11 @@
             <if test="null!=port">
                 PORT  ,
             </if>
-            <if test="null!=dUserName">
-                D_USER_NAME  ,
+            <if test="null!=loginName">
+                LOGIN_NAME  ,
             </if>
-            <if test="null!=dPassword">
-                D_PASSWORD  ,
+            <if test="null!=loginPwd">
+                LOGIN_PWD  ,
             </if>
             <if test="null!=stationNo">
                 STATION_NO  ,
@@ -53,7 +53,7 @@
                 CREATE_TIME  ,
             </if>
             <if test="null!=updateTime">
-                UPDATE_TIME  
+                UPDATE_TIME
             </if>
         </trim>
         <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
@@ -66,11 +66,11 @@
             <if test="null!=port">
                 #{port, jdbcType=INTEGER} ,
             </if>
-            <if test="null!=dUserName">
-                #{dUserName, jdbcType=VARCHAR} ,
+            <if test="null!=loginName">
+                #{loginName, jdbcType=VARCHAR} ,
             </if>
-            <if test="null!=dPassword">
-                #{dPassword, jdbcType=VARCHAR} ,
+            <if test="null!=loginPwd">
+                #{loginPwd, jdbcType=VARCHAR} ,
             </if>
             <if test="null!=stationNo">
                 #{stationNo, jdbcType=VARCHAR} ,
@@ -78,14 +78,12 @@
             <if test="null!=jobNo">
                 #{jobNo, jdbcType=VARCHAR} ,
             </if>
-            <if test="null!=delFlag">
-                #{delFlag, jdbcType=VARCHAR} ,
-            </if>
+            #{delFlag} ,
             <if test="null!=createTime">
                 #{createTime, jdbcType=TIMESTAMP} ,
             </if>
             <if test="null!=updateTime">
-                #{updateTime, jdbcType=TIMESTAMP} 
+                #{updateTime, jdbcType=TIMESTAMP}
             </if>
         </trim>
     </insert>
@@ -93,46 +91,47 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.xiaozhameng.ssm.boot.service.dao.po.DeviceInfo">
         UPDATE device_info
         <set>
-			<if test="null!=ip and ''!=ip ">
-				IP = #{ip, jdbcType=VARCHAR} ,
-			</if>
-		   <if test="null!=port">
-			  PORT = #{port, jdbcType=INTEGER} ,
-		   </if>
-			<if test="null!=dUserName and ''!=dUserName ">
-				D_USER_NAME = #{dUserName, jdbcType=VARCHAR} ,
-			</if>
-			<if test="null!=dPassword and ''!=dPassword ">
-				D_PASSWORD = #{dPassword, jdbcType=VARCHAR} ,
-			</if>
-			<if test="null!=stationNo and ''!=stationNo ">
-				STATION_NO = #{stationNo, jdbcType=VARCHAR} ,
-			</if>
-			<if test="null!=jobNo and ''!=jobNo ">
-				JOB_NO = #{jobNo, jdbcType=VARCHAR} ,
-			</if>
-			<if test="null!=delFlag and ''!=delFlag ">
-				DEL_FLAG = #{delFlag, jdbcType=VARCHAR} ,
-			</if>
-		   <if test="null!=createTime">
-			  CREATE_TIME = #{createTime, jdbcType=TIMESTAMP} ,
-		   </if>
-		   <if test="null!=updateTime">
-			  UPDATE_TIME = #{updateTime, jdbcType=TIMESTAMP} 
-		   </if>
+            <if test="null!=ip and ''!=ip ">
+                IP = #{ip, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=port">
+                PORT = #{port, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=loginName and ''!=loginName ">
+                LOGIN_NAME = #{loginName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=loginPwd and ''!=loginPwd ">
+                LOGIN_PWD = #{loginPwd, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=stationNo and ''!=stationNo ">
+                STATION_NO = #{stationNo, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=jobNo and ''!=jobNo ">
+                JOB_NO = #{jobNo, jdbcType=VARCHAR} ,
+            </if>
+
+            <if test="null!=delFlag">
+                DEL_FLAG = #{delFlag, jdbcType=BIT} ,
+            </if>
+            <if test="null!=createTime">
+                CREATE_TIME = #{createTime, jdbcType=TIMESTAMP} ,
+            </if>
+            <if test="null!=updateTime">
+                UPDATE_TIME = #{updateTime, jdbcType=TIMESTAMP}
+            </if>
         </set>
         WHERE
-            ID = #{id} 
+        ID = #{id}
     </update>
 
     <select id="getByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT
-            <include refid="Base_Column_List" />
+        <include refid="Base_Column_List" />
         FROM device_info
         WHERE
-            ID = #{id} 
+        ID = #{id}
     </select>
-
+    
     <select id="getByJobNoAndStationNo" parameterType="Object" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List" />

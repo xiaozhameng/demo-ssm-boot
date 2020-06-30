@@ -4,6 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 
+/**
+ * @author xiaozhameng
+ */
+
 @Getter
 @AllArgsConstructor
 public enum CommonResCode {
