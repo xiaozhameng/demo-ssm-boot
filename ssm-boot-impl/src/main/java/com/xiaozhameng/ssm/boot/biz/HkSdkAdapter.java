@@ -39,7 +39,7 @@ public class HkSdkAdapter {
     /**
      * SDK接口
      */
-    static HCNetSDK hCNetSDK = null ;// HCNetSDK.INSTANCE;
+    static HCNetSDK hCNetSDK = HCNetSDK.INSTANCE;
 
     @Value("${sdk-config.temp-path}")
     private String tempPath;
@@ -81,11 +81,10 @@ public class HkSdkAdapter {
      * <p>
      * SDK提供了较为丰富的设备状态监测接口，参考文档 ： 《设备网络SDK编程指南（IPC）》
      *
-     * @param tokenStr
+     * @param token
      * @return result
      */
-    public StateRes deviceState(String tokenStr) {
-        Token token = TokenUtil.tokenParse(tokenStr);
+    public StateRes deviceState(Token token) {
         long loginId = token.getLoginId();
         // 设备登录ID
         NativeLong lUserId = new NativeLong(loginId);
@@ -171,8 +170,6 @@ public class HkSdkAdapter {
         jpegpara.wPicSize = 2;
         jpegpara.wPicQuality = 1;
 
-        LocalDate now = LocalDate.now();
-
         // 基准目录 / 设备ID / pic /年/月/日_HHmmss.jpeg
         String format = "yyyy" + File.separator + "MM" + File.separator + "dd_HHmmss";
         String subPath = new SimpleDateFormat(format).format(new Date());
@@ -181,7 +178,11 @@ public class HkSdkAdapter {
                 + token.getDeviceId() + File.separator
                 + "pic" + File.separator
                 + subPath + ".jpeg";
-        boolean res = hCNetSDK.NET_DVR_CaptureJPEGPicture(lUserId, DEFAULT_CHANNEL, jpegpara, path);
+        File pathFile = new File(path);
+        if (!pathFile.exists()){
+            pathFile.mkdirs();
+        }
+        boolean res = hCNetSDK.NET_DVR_CaptureJPEGPicture(lUserId, DEFAULT_CHANNEL, jpegpara, path + ".jpeg");
         checkException(res, "抓图失败");
         return CaptureRes.builder()
                 .picPath(path)

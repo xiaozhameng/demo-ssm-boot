@@ -2,9 +2,13 @@ package com.xiaozhameng.ssm.boot.service;
 
 import com.xiaozhameng.ssm.boot.service.dao.DeviceInfoExtendDao;
 import com.xiaozhameng.ssm.boot.service.dao.po.DeviceInfoExtend;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author xiaozhameng
@@ -45,4 +49,16 @@ public class DeviceInfoExtendService {
         return deviceInfoExtendDao.getByPrimaryKey(id);
     }
 
+    /**
+     * 根据主键查询一条数据
+     *
+     * @param deviceIds id
+     * @return po
+     */
+    public List<DeviceInfoExtend> getByDeviceIdList(List<Long> deviceIds){
+        if (deviceIds == null || deviceIds.isEmpty()){
+            return Collections.emptyList();
+        }
+        return Optional.ofNullable(deviceInfoExtendDao.getByDeviceIdList(deviceIds)).orElse(Collections.emptyList());
+    }
 }

@@ -45,4 +45,7 @@ public class DeviceConfigInfoVo implements Serializable {
 
     /** 更新时间戳 */
     private Date updateTime;
+
+    /** 登录之后的token */
+    private String token;
 }

@@ -1,6 +1,9 @@
 package com.xiaozhameng.ssm.boot.service.dao;
 
 import com.xiaozhameng.ssm.boot.service.dao.po.DeviceInfoExtend;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author xiaozhameng
@@ -31,5 +34,12 @@ public interface DeviceInfoExtendDao {
      */
     DeviceInfoExtend getByPrimaryKey(Long id);
 
+    /**
+     * 根据主键查询一条数据
+     *
+     * @param deviceIds id
+     * @return po
+     */
+    List<DeviceInfoExtend> getByDeviceIdList(@Param("deviceIds") List<Long> deviceIds);
 
 }

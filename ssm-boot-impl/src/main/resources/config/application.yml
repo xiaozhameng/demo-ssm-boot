@@ -3,7 +3,7 @@ sdk-config:
   #  SDK 包的位置
   sdk-path: /home
   #  文件存储临时路径
-  temp-path: /home
+  temp-path: C:\\Picture\\myDemo
 # sftp 配置p
 sftp-config:
   sftpHost: xiaozhameng.sftp.aliyun

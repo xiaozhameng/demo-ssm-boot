@@ -8,6 +8,7 @@ import com.xiaozhameng.hk.api.message.req.DeviceOptReq;
 import com.xiaozhameng.hk.api.message.res.DeviceOptCommonRes;
 import com.xiaozhameng.hk.api.message.vo.DeviceConfigInfoVo;
 import com.xiaozhameng.ssm.boot.biz.HkSdkAdapter;
+import com.xiaozhameng.ssm.boot.message.entity.Token;
 import com.xiaozhameng.ssm.boot.message.enums.CommonStatus;
 import com.xiaozhameng.ssm.boot.message.enums.DeviceInfoExtendEnum;
 import com.xiaozhameng.ssm.boot.message.enums.DeviceOptTypeEnum;
@@ -123,6 +124,10 @@ public class HkSdkManageController {
     public Result<DeviceOptCommonRes<String>> deviceLogin(@Valid @RequestBody DeviceLoginReq param) {
         DeviceInfo deviceInfo = deviceInfoService.getByPrimaryKey(param.getDeviceId());
         Assert.notNull(deviceInfo, String.format("根据设备ID = %s 未找到设备配置信息，请检查！", param.getDeviceId()));
+        // 调用设备初始化接口
+        boolean sdkInit = hkSdkAdapter.sdkInit();
+        Assert.isTrue(sdkInit,"设备初始化操作失败");
+
         // 调用设备登录接口
         long loginId = hkSdkAdapter.deviceLogin(deviceInfo);
         // 生成token
@@ -158,7 +163,9 @@ public class HkSdkManageController {
      */
     @PostMapping("state")
     public Result<DeviceOptCommonRes<Boolean>> deviceState(@Valid @RequestBody DeviceOptReq param) {
-        StateRes stateRes = hkSdkAdapter.deviceState(param.getToken());
+        String tokenStr = param.getToken();
+        Token token = TokenUtil.tokenParse(tokenStr);
+        StateRes stateRes = hkSdkAdapter.deviceState(token);
         DeviceOptCommonRes.builder()
                 .code(stateRes.getCode())
                 .message(stateRes.getCodeDes())

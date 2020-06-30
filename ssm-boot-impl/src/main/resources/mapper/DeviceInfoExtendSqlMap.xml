@@ -15,7 +15,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        ID ,DEVICE_ID ,KEY ,VALUE ,CREATE_TIME ,UPDATE_TIME 
+        ID ,DEVICE_ID ,`KEY` ,`VALUE` ,CREATE_TIME ,UPDATE_TIME
     </sql>
 
     <insert id="saveSelective"  useGeneratedKeys="true" keyProperty="id"  parameterType="com.xiaozhameng.ssm.boot.service.dao.po.DeviceInfoExtend">
@@ -28,10 +28,10 @@
                 DEVICE_ID  ,
             </if>
             <if test="null!=key">
-                KEY  ,
+                `KEY`  ,
             </if>
             <if test="null!=value">
-                VALUE  ,
+                `VALUE`  ,
             </if>
             <if test="null!=createTime">
                 CREATE_TIME  ,
@@ -60,6 +60,7 @@
                 #{updateTime, jdbcType=TIMESTAMP} 
             </if>
         </trim>
+        ON DUPLICATE KEY UPDATE update_time = now(), `VALUE` = VALUES(`VALUE`)
     </insert>
 
     <update id="updateByPrimaryKeySelective" parameterType="com.xiaozhameng.ssm.boot.service.dao.po.DeviceInfoExtend">
@@ -69,10 +70,10 @@
 			  DEVICE_ID = #{deviceId, jdbcType=BIGINT} ,
 		   </if>
 			<if test="null!=key and ''!=key ">
-				KEY = #{key, jdbcType=VARCHAR} ,
+				`KEY` = #{key, jdbcType=VARCHAR} ,
 			</if>
 			<if test="null!=value and ''!=value ">
-				VALUE = #{value, jdbcType=VARCHAR} ,
+				`VALUE` = #{value, jdbcType=VARCHAR} ,
 			</if>
 		   <if test="null!=createTime">
 			  CREATE_TIME = #{createTime, jdbcType=TIMESTAMP} ,
@@ -91,6 +92,17 @@
         FROM device_info_extend
         WHERE
             ID = #{id} 
+    </select>
+
+    <select id="getByDeviceIdList" parameterType="Object" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM device_info_extend
+        WHERE
+        DEVICE_ID IN
+        <foreach collection="deviceIds" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
     </select>
     
 </mapper>

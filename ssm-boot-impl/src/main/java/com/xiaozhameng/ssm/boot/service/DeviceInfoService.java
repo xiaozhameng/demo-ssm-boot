@@ -5,6 +5,7 @@ import com.xiaozhameng.ssm.boot.service.dao.po.DeviceInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,7 +78,7 @@ public class DeviceInfoService {
      * @return
      */
     public List<DeviceInfo> getPage(long startId, int pageSize) {
-        return deviceInfoDao.getPage(startId, pageSize);
+        return Optional.ofNullable(deviceInfoDao.getPage(startId, pageSize)).orElse(Collections.emptyList());
     }
 
 }
