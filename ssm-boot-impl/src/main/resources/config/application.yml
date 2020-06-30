@@ -5,7 +5,11 @@ sdk-config:
   #  文件存储临时路径
   temp-path: /home
 sftp-config:
-  sfp
+  sftpHost: xiaozhameng.sftp.aliyun
+  port: 20
+  sftpUser: temp
+  password: 123456
+  rootPath: /temp
 
 spring:
   datasource:

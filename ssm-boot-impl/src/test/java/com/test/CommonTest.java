@@ -2,9 +2,6 @@ package com.test;
 
 import com.xiaozhameng.ssm.boot.utils.DateUtils;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.time.LocalDateTime;
 import java.util.Date;
 

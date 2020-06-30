@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 /**
  * @author xiaozhameng
  */
@@ -19,4 +21,9 @@ public class DemoController {
         return "hello," + userName;
     }
 
+    @RequestMapping("demo/test")
+    public String demo(Map<String,Object> map){
+        map.put("message","this is message");
+        return "demo";
+    }
 }

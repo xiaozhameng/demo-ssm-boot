@@ -49,8 +49,6 @@ public class HkSdkOptController {
     private DeviceOptRecordService deviceOptRecordService;
     @Resource
     private SftpRemoteFileTemplate sftpRemoteFileTemplate;
-    @Value("${sftp-config.absPath}")
-    private String sftpAbsPath ;
 
     /**
      * 线程池
@@ -163,7 +161,7 @@ public class HkSdkOptController {
         File file = Paths.get(tempFilePath).toFile();
         if (file.exists()) {
             Message<File> message = MessageBuilder.withPayload(file).build();
-            sftpRemoteFileTemplate.send(message, sftpAbsPath, FileExistsMode.REPLACE);
+            sftpRemoteFileTemplate.send(message, "file", FileExistsMode.REPLACE);
             // file.delete();
             // 本地临时文件先不删除
         }
